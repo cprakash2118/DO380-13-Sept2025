@@ -1,0 +1,116 @@
+-Pront-01-)
+ Product Name - Red Hat OpenShift
+ Training Module - DO380v414 - Admin III (After DO280v414) 
+ Day1/2 operations (DO180/280/380).
+
+- Red Hat OpenShift (RHOKE)  [Self Eddition - RHOKE,RHOCP,RHOPP]
+- TOC
+Unit-1 Authentication & Athorization (IdP=htpasswd,LDAP,LDAP-Sync,OIDC-RHSSO - Oauth), Client-Certiticate.
+Unit-2-) Backup, restore, and application migration using OADP.
+Unit-3-) Cluster Partition - 
+Unit-4-)  Pod Scheduling
+Unit-5-) ArgoCD gitOps 
+Unit-6-) Monitoring Stack
+Unit-7-) Logging stack - SOlution  
+  
+- CLassroom Setup/Environment:-
+ 1-) Users details:-
+ 2-) Network Details:-
+ 3-) VMs/Server details:-
+
+ 1-) Users details:-
+    Login to VMs/Servers:-
+	student/student 
+	root/redhat 
+	
+	Login to OCP cluster:-
+	Using token(via Oauth)/client-certificate(Directly with kube-apiserver).
+    Token based also:- (cluster-admin)
+    userName=admin
+    password=redhatocp 	
+	
+	userName=developer
+	password=developer
+	
+	API URL - https://api.clusterName.baseDomain:6443 
+	          https://api.ocp4.example.com:6443 
+	
+    Web COnsole - https://appName-nsName.apps.clusterName.baseDomain
+                - https://console-openshift-console.ocp4.example.com 
+	FYI-
+	clusterName=ocp4 
+	baseDomain=example.com 
+	appName=console 
+	nsName=openshift-console
+	
+	$ oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+	$ oc whoami --show-console 
+	https://console-openshift-console.ocp4.example.com
+	
+ 2-) Network Details:-
+     Network Name                  Domain Name                      IP Range 
+	 classroom network             example.com                      172.25.254.0/24
+	 student network               lab.example.com                  172.25.250.0/24 
+	 Cluster network               ocp4.example.com                 192.168.50.0/24
+	 
+	 
+  3-) VMs/Servers:-
+     - workstation.lab.example.com   [jump server]
+	 - bastion.lab.example.com       [Connect student to classroom network] - router 
+	 - utility.lab.example.com       [DNS/DHCP/PXE/HAproxy/Apache/NFS-server etc] golabl LB .
+	 - master01-03.ocp4.example.com  [k8s/ocp and ocp services running]
+     - worker01-03.ocp4.example.com  [End user application deployed]
+     - LDAP server - (idm/rhdm) - idm.ocp4.example.com, rhds.ocp4.example.com 
+     - RHSSO server sso.ocp4.example.com 
+     - regisrtry.ocp4.example.com    
+     - cpeh.ocp4.example.com.
+
+Eg:-
+    Base Domain - citi.com 
+    Cluster Name - cluster-apac 
+     API URL -  https://api.cluster-apac.citi.com:6443 
+	 Web Console - https://console-openshift-console.apps.cluster-apac.citi.com 
+
+    
+    Cluster Name - cluster-na 
+	 API URL -  https://api.cluster-na.citi.com:6443 
+	 Web Console - https://console-openshift-console.apps.cluster-na.citi.com 
+
+    $ oc login -u username -p redhat API-URL 
+
+####################################################################################
+Example:-
+
+FYI
+- admin/redhatocp - LDAP user 
+- admin user must be part of multiple Identitiy providers IdPs [LDAP & htpasswd]
+
+admin/red ; user1-10/redhat123  ; secret=secret-sre-team ; IdP=idp-htpasswd-sre-team 
+user11-20/redhat123  ; secret=secret-devops-team ; IdP=idp-htpasswd-devops-team
+user21-30/redhat123  ; secret=secret-myapp-team ; IdP=idp-htpasswd-myapp-team  
+
+
+Oauth with LDAP and LDAP sync.
+
+	
+
+
+
+
+
+
+
+ 	 
+	 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
