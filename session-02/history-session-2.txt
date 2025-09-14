@@ -1,0 +1,437 @@
+    1  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+    2  nslookup api.ocp4.example.com
+    3  ssh root@api.ocp4.example.com
+    4  oc get nodes -o wide 
+    5  ssh root@api.ocp4.example.com
+    6  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+    7  ssh root@api.ocp4.example.com
+    8  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+    9  oc whoami -t
+   10  ssh root@api.ocp4.example.com 
+   11  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+   12  oc whoami 
+   13  oc get nodes
+   14  oc whoami --loglevel 7 
+   15  oc whoami -t 
+   16  cat /home/student/.kube/config 
+   17  oc whoami -t 
+   18  mv .kube /tmp/
+   19  oc whoami -t 
+   20  oc whoami -t --loglevel 7 
+   21  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+   22  cat /home/student/.kube/config 
+   23  oc whoami -t --loglevel 7 
+   24  oc logout 
+   25  cat /home/student/.kube/config 
+   26  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+   27  cat /home/student/.kube/config 
+   28  oc whoami -t 
+   29  rm -rf  .kube
+   30  oc whoami -t 
+   31  oc get nodes
+   32  oc login --token=sha256~6TbwpqOuKVZe87rV-MDbOV_0dtOhjBd6QIgQqKmeGaE --server=https://api.ocp4.example.com:6443
+   33  oc whoami 
+   34  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+   35  rm -rf .kube/
+   36  oc whoami 
+   37  ssh root@api.ocp4.example.com  
+   38  ll
+   39  oc get nodes
+   40  oc get nodes --kubeconfig kubeconfig
+   41  oc whoami --kubeconfig  kubeconfig
+   42  oc whoami -t --kubeconfig  kubeconfig
+   43  oclogout --kubeconfig  kubeconfig
+   44  oc logout --kubeconfig  kubeconfig
+   45  oc whoami -t 
+   46  env | grep KUBE
+   47  export KUBECONFIG=/home/student/kubeconfig
+   48  env | grep KUBE
+   49  oc get nodes
+   50  oc whoami 
+   51  oc whoami -t
+   52  oc logout 
+   53  env | grep KUBE
+   54  unset KUBECONFIG
+   55  env | grep KUBE
+   56  oc whoami -t
+   57  cp -rpv kubeconfig .kube/config 
+   58  oc whoami -t
+   59  oc get nodes
+   60  ssh root@api.ocp4.example.com   
+   61  mkdir work 
+   62  cd work/
+   63  pwd
+   64  ll
+   65  touch htpasswd-{sre,devops,myapp}-team 
+   66  ll
+   67  file * 
+   68  for x in {1..10}; do htpasswd -b -B htpasswd-sre-team user$x redhat123; done
+   69  for x in {11..20}; do htpasswd -b -B htpasswd-devops-team user$x redhat123; done
+   70  for x in {21..40}; do htpasswd -b -B htpasswd-my-team user$x redhat123; done
+   71  for x in {21..40}; do htpasswd -b -B htpasswd-myapp-team user$x redhat123; done
+   72  ll
+   73  cat htpasswd-sre-team 
+   74  oc create secret generic secret-sre-team --from-file htpasswd=htpasswd-sre-team -n openshift-config --dry-run=client -o yaml > secret-sre-team.yaml 
+   75  ll
+   76  oc create secret generic secret-devops-team --from-file htpasswd=htpasswd-devops-team -n openshift-config --dry-run=client -o yaml > secret-devops-team.yaml 
+   77  oc create secret generic secret-myapp-team --from-file htpasswd=htpasswd-myapp-team -n openshift-config --dry-run=client -o yaml > secret-myapp-team.yaml 
+   78  oc get secret -n openshift-config 
+   79  ll
+   80  oc apply -f htpasswd-sre-team
+   81  oc apply -f secret-sre-team.yaml
+   82  oc apply -f secret-devops-team.yaml 
+   83  oc apply -f secret-myapp-team.yaml 
+   84  oc get secret -n openshift-config 
+   85  oc get secret -n openshift-config  | grep secret-
+   86  oc get secret secret-sre-team -n openshift-config -o yaml 
+   87  echo dXNlcjE6JDJ5JDA1JG1pbFdUdUVrYmpvbnhQaUNDdVJLNC5xbWJWYVUya2FDQXZBUk1DNnJaMkNuMk90cXdBWDdHCnVzZXIyOiQyeSQwNSRCZ1cvZXFBbGVJaTIyWC5yZ3dNSU4ua0IybVVsT1JiSEp4V2xneEtWUmxLNUMvUGlxZUg3eQp1c2VyMzokMnkkMDUkekFBSERjeGlhbzY2Mk9zZkpVTDBvdS95amttRmhzcGlHa09IdzBqUzlEMmRNWHowdjdmeUsKdXNlcjQ6JDJ5JDA1JEc5Lm4yRWMyS25YS0U1VUNYUU1qTE8vZDEyUGRoU0R5RXZETnlpS3ZVMFVIQnd5eWsyQk8uCnVzZXI1OiQyeSQwNSR0WEd3UDR5MkRuNHBBV1g0TWF4bDh1QkN0VVpYSWlNVWFlLnQvMUplNjJndEFXbGRWeUN5Ngp1c2VyNjokMnkkMDUkVUJhYk85NGJ1ck0wVWthamZjUTJWdWpuSHVFeFZGcUwzSTdLRW9GbjNBVnpGckNYQmg4Um0KdXNlcjc6JDJ5JDA1JEt0R2Rqdnh3b2dsdWZMVFBUZzhLYWUxOGY4WUY5YlJSWlhWYy5rQUhlZUNWdXpwdVZOVGw2CnVzZXI4OiQyeSQwNSRnek5QYURacVVpRTVETEJiZ2tpem1PR0VpRFcuMmU2VUYvYnZha0IyOHhRUjBRcUE1V1pYTwp1c2VyOTokMnkkMDUkWERVc2x6UXk4aElibUxtSEZaaGlsT2pLZDhldGpSOTRUcU1wMG9RSEJFUmtmRFJQUFc2RXkKdXNlcjEwOiQyeSQwNSQ2UmMvZ0J4Y1JxM09yd21QN2RFL1ZlWG5Dd2h5UlU3eW5MSDZOcS8uYUdQeFV4bWhkRUwzeQo= | base64 -d 
+   88  oc get oauth cluster -o yaml > oauth.yaml 
+   89  vim oauth.yaml 
+   90  oc get oauth cluster -o yaml
+   91  oc get oauth cluster -o yaml > oauth.yaml 
+   92  vim oauth.yaml 
+   93  oc apply -f oauth.yaml 
+   94  oc get pods -n openshift-authentication
+   95  watch oc get pods -n openshift-authentication
+   96  watch oc get pods -n openshift-authentication -o wide 
+   97  oc get pods -n openshift-authentication -o wide 
+   98  oc delete pods oauth-openshift-9f8cb85f-f5sw9 -n openshift-authentication
+   99  oc get pods -n openshift-authentication -o wide 
+  100  oc get pods -n openshift-authentication-operator -o wide 
+  101  oc get oauth cluster 
+  102  oc edit oauth cluster 
+  103  oc get pods -n openshift-apiserver -o wide 
+  104  oc get pods -n openshift-apiserver-operator -o wide 
+  105  oc get pods -n openshift-kubeapi-server -o wide 
+  106  oc get pods -n openshift-kube-apiserver -o wide 
+  107  oc get pods -n openshift-etcd -o wide 
+  108  oc get pods -n openshift-kube-controller-manager -o wide 
+  109  oc get pods -n openshift-kube-scheduler -o wide 
+  110  for x in {1..40}; do oc login -u user$x -p redhat123; done
+  111  oc get users| grep sre 
+  112  oc whoami 
+  113  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  114  oc get users| grep sre 
+  115  oc get users| grep devops
+  116  oc get users| grep myapp
+  117  oc whoami 
+  118  oc extract secret/secret-sre-team -n openshift-config --to=.
+  119  vim htpasswd
+  120  htpasswd -b -B htpasswd admin red
+  121  vim htpasswd
+  122  oc set data --help |less
+  123  #oc set data secret/foo --from-file=secret-dir
+  124  oc set data secret/secret-sre-team -n openshift-config --from-file htpasswd=htpasswd
+  125  watch oc get pods -n openshift-authentication -o wide 
+  126  oc get users | grep admin 
+  127  oc get oauth cluster
+  128  oc get oauth cluster -o yaml 
+  129  oc extract secret/ldap-secret -n openshift-config --to=-
+  130  oc extract secret/ldap-secret -n openshift-config --to=.
+  131  cat bindPassword ; echo 
+  132  oc whoami 
+  133  oc login -u admin -p red https://api.ocp4.example.com:6443 
+  134  oc get users | grep sre 
+  135  oc adm groups new sre_grp 
+  136  oc adm groups new devops_grp 
+  137  oc login -u admin -p red https://api.ocp4.example.com:6443 
+  138  oc login -u admin -p redredocp https://api.ocp4.example.com:6443 
+  139  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  140  oc edit oauth 
+  141  watch oc get pods -n openshift-authentication -o wide 
+  142  oc login -u admin -p red https://api.ocp4.example.com:6443 
+  143  oc get users | grep sre 
+  144  oc describe clusterrolebindings |less
+  145  oc whoami 
+  146  oc whoami -t 
+  147  oc auth  can-i create cluster 
+  148  oc auth  can-i create user
+  149  oc auth  can-i create node
+  150  oc logout 
+  151  oc whoami 
+  152  oc login -u admin -p red https://api.ocp4.example.com:6443 
+  153  oc whoami 
+  154  oc whoami -t 
+  155  oc auth  can-i create node
+  156  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  157  oc auth  can-i create node
+  158  oc whoami -t 
+  159  oc adm policy add-cluster-role-to-user cluster-admin chandra 
+  160  oc get users | grep sre 
+  161  oc edit cluster oauth
+  162  oc whoami 
+  163  oc edit oauth 
+  164  oc get users | grep user20 
+  165  ll
+  166  cat htpasswd
+  167  htpasswd -b -B htpasswd user20 red
+  168  cat htpasswd
+  169  oc set data secret/secret-sre-team -n openshift-config --from-file htpasswd=htpasswd
+  170  watch oc get pods -n openshift-authentication -o wide 
+  171  oc get users | grep user20 
+  172  oc login -u user20 -p red 
+  173  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  174  oc get users | grep user20 
+  175  oc get oauth -o yaml 
+  176  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com"
+  177  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep admin 
+  178  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  179  oc get oauth -o yaml 
+  180  oc get oauth -o yaml | tail -50 
+  181  oc get oauth -o yaml | tail -50 | head
+  182  oc get oauth -o yaml | tail -50 | head -20 
+  183  oc get oauth -o yaml | tail -50 | head -30 
+  184  oc get oauth -o yaml | tail -50 | head -30 | tail 
+  185  oc get oauth -o yaml | tail -50 | head -30 | tail -15
+  186  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  187  binbDN=uid=admin,cn=users,cn=accounts,dc=ocp4,dc=example,dc=com
+  188  LDAP-URL=ldap://idm.ocp4.example.com/cn=users,cn=accounts,dc=ocp4,dc=example,dc=com?uid
+  189  BindDN=uid=admin,cn=users,cn=accounts,dc=ocp4,dc=example,dc=com
+  190  binbDN=uid=admin,cn=users,cn=accounts,dc=ocp4,dc=example,dc=com
+  191  LDAPURL=ldaps://idm.ocp4.example.com/cn=users,cn=accounts,dc=ocp4,dc=example,dc=com?uid
+  192  ldapurl=ldaps://idm.ocp4.example.com/cn=users,cn=accounts,dc=ocp4,dc=example,dc=com?uid
+  193  lab start auth-ldap 
+  194  oc get oauth -o yaml
+  195  watch oc get pods -n openshift-authentication -o wide 
+  196  oc login -u kristendelgado -p redhat123
+  197  oc login -u admin -p redhatocp https://api.ocp4.example.com:6443 
+  198  oc get users
+  199  oc get users | grep kristendelgado
+  200  ll
+  201  history > history_session-01.txt
+  202  cd ..
+  203  git clone https://github.com/cprakash2118/DO380-13-Sept2025
+  204  cp -rv work DO380-13-Sept2025/
+  205  history 
+  206  cd DO380-13-Sept2025/
+  207  pwd
+  208  ll
+  209  git add .
+  210  git commit -m update 
+  211  git push 
+  212  uptime 
+  213  oc whoami 
+  214  cat .kube/config 
+  215  oc whoami --show-console 
+  216  oc get oauth -o yaml 
+  217  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  218  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  219  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" 
+  220  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" 
+  221  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" 
+  222  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" | grep -i admins 
+  223  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" | grep -i admin
+  224  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  225  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  226  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" | grep -i admin
+  227  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com"
+  228  #cn=administrators,ou=people,dc=example,dc=com
+  229  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  230  #bind DN=uid=admin,cn=users,cn=accounts,dc=ocp4,dc=example,dc=com
+  231  oc get oauth -o yaml 
+  232  ldap-secret
+  233  #ca-config-map
+  234  mkdir work 
+  235  mkdir ldap-work 
+  236  cd ldap-work/
+  237  oc extract secret/ldap-secret -n openshift-config --to=.
+  238  ll
+  239  cat bindPassword  ; echo 
+  240  oc extract cm/ca-config-map -n openshift-config --to=.
+  241  ll
+  242  oc whoami --show-console 
+  243  oc get oauth -o yaml 
+  244  oc get secret/ldap-bind-password-w4rbq -n openshift-config -o yaml > ldap-secret-idm.yaml 
+  245  oc get cm/ldap-ca-9m6bn -n openshift-config -o yaml > ldap-cm-idm.yaml 
+  246  ll
+  247  oc get cm ldap-ca-9m6bn -n openshift-config 
+  248  oc edit cm ldap-ca-9m6bn -n openshift-config 
+  249  :ll
+  250  ll
+  251  vim ldap-secret-idm.yaml 
+  252  echo cmVkaGF0b2Nw | base64 -d 
+  253  echo cmVkaGF0b2Nw | base64 -d ; echo  
+  254  ll
+  255  vim ldap-cm-idm.yaml 
+  256  ll
+  257  oc get oauth -o yaml 
+  258  ll
+  259  oc get oauth -o yaml > oauth.yaml 
+  260  vim oauth.yaml 
+  261  oc get pods -n openshift-authentication
+  262  oc apply -f oauth.yaml 
+  263  watch oc get pods -n openshift-authentication
+  264  oc get oauth -o yaml 
+  265  watch oc get pods -n openshift-authentication
+  266  oc get pods -n openshift-authentication
+  267  for x in `cat`; do oc delete pod $x -n openshift-authentication; done
+  268  oc get pods -n openshift-authentication
+  269  oc get oauth -o yaml 
+  270  oc get secret ldap-secret-idm -n openshift-authentication 
+  271  ll
+  272  oc get pods -n openshift-authentication
+  273  oc apply -f ldap-secret-idm.yaml 
+  274  oc apply -f ldap-cm-idm.yaml 
+  275  oc get secret ldap-secret-idm -n openshift-authentication 
+  276  oc get secret ldap-secret-idm -n openshift-config 
+  277  oc login -u admin -p redhatocp 
+  278  oc get oauth -o yaml 
+  279  oc edit oauth 
+  280  oc get pods -n openshift-authentication
+  281  oc get user | grep admin 
+  282  oc delete user admin 
+  283  oc get user | grep admin 
+  284  oc whoami 
+  285  oc login -u admin -p redhatocp 
+  286  oc get user | grep admin 
+  287  oc login -u admin -p red
+  288  oc get identities.user.openshift.io 
+  289  oc get identities.user.openshift.io  | grep admin 
+  290  oc delete identities.user.openshift.io "Red Hat Identity Management:dWlkPWFkbWluLGNuPXVzZXJzLGNuPWFjY291bnRzLGRjPW9jcDQsZGM9ZXhhbXBsZSxkYz1jb20"
+  291  oc login -u admin -p red
+  292  oc get identities.user.openshift.io  | grep admin 
+  293  oc delete identities.user.openshift.io htpasswd_provider:admin 
+  294  oc delete identities.user.openshift.io idp-htpasswd-sre-team:admin 
+  295  oc get identities.user.openshift.io  | grep admin 
+  296  oc login -u admin -p red
+  297  oc get identities.user.openshift.io  | grep admin 
+  298  oc get user  | grep admin 
+  299  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h idm.ocp4.example.com -b "dc=ocp4,dc=example,dc=com" | grep -A 4 Trusts
+  300  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com"
+  301  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" |less
+  302  #bind DN - apiVersion: config.openshift.io/v1
+  303  kind: OAuth
+  304  metadata:
+  305    name: cluster
+  306  spec:
+  307  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" |less
+  308  #cn=administrators,ou=people,dc=example,dc=com
+  309  watch oc get pods -n openshift-authentication
+  310  oc edit oauth
+  311  watch oc get pods -n openshift-authentication
+  312  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" 
+  313  oc get user | grep kristendelgado
+  314  oc login -u kristendelgado -p redhat123 
+  315  oc delete user kristendelgado
+  316  oc get identities.user.openshift.io | grep kristendelgado
+  317  oc delete identities.user.openshift.io ldap-Example:dWlkPWtyaXN0ZW5kZWxnYWRvLG91PXBlb3BsZSxkYz1leGFtcGxlLGRjPWNvbQ
+  318  oc login -u kristendelgado -p redhat123 
+  319  oc get identities.user.openshift.io | grep kristendelgado
+  320  oc get user | grep kristendelgado
+  321  oc login -u kristendelgado -p redhat123 
+  322  oc edit oauth 
+  323  watch oc get pods -n openshift-authentication
+  324  oc login -u kristendelgado -p redhat123 
+  325  watch oc get pods -n openshift-authentication
+  326  oc login -u kristendelgado -p redhat123 
+  327  oc edit oauth 
+  328  watch oc get pods -n openshift-authentication
+  329  watch oc get pods -n openshift-authentication -o wide 
+  330  oc login -u kristendelgado -p redhat123 
+  331  watch oc get pods -n openshift-authentication -o wide 
+  332  oc login -u kristendelgado -p redhat123 
+  333  oc edit oauth 
+  334  watch oc get pods -n openshift-authentication -o wide 
+  335  oc login -u kristendelgado -p redhat123 
+  336  watch oc get pods -n openshift-authentication -o wide 
+  337  oc login -u kristendelgado -p redhat123 
+  338  oc edit oauth 
+  339  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" 
+  340  watch oc get pods -n openshift-authentication -o wide 
+  341  oc login -u kristendelgado -p redhat123 
+  342  oc edit oauth 
+  343  watch oc get pods -n openshift-authentication -o wide 
+  344  oc login -u kristendelgado -p redhat123 
+  345  watch oc get pods -n openshift-authentication -o wide 
+  346  oc login -u kristendelgado -p redhat123 
+  347  oc edit oauth 
+  348  watch oc get pods -n openshift-authentication -o wide 
+  349  oc login -u kristendelgado -p redhat123 
+  350  oc login -u admin -p red
+  351  watch oc get pods -n openshift-authentication -o wide 
+  352  oc get groups.user.openshift.io 
+  353  lab start auth-sync
+  354  ldapsearch -D "cn=Directory Manager" -w redhatocp -p 389 -h rhds.ocp4.example.com -b "dc=example,dc=com" 
+  355  echo dXNlcjE6JDJ5JDA1JG1pbFdUdUVrYmpvbnhQaUNDdVJLNC5xbWJWYVUya2FDQXZBUk1DNnJaMkNuMk90cXdBWDdHCnVzZXIyOiQyeSQwNSRCZ1cvZXFBbGVJaTIyWC5yZ3dNSU4ua0IybVVsT1JiSEp4V2xneEtWUmxLNUMvUGlxZUg3eQp1c2VyMzokMnkkMDUkekFBSERjeGlhbzY2Mk9zZkpVTDBvdS95amttRmhzcGlHa09IdzBqUzlEMmRNWHowdjdmeUsKdXNlcjQ6JDJ5JDA1JEc5Lm4yRWMyS25YS0U1VUNYUU1qTE8vZDEyUGRoU0R5RXZETnlpS3ZVMFVIQnd5eWsyQk8uCnVzZXI1OiQyeSQwNSR0WEd3UDR5MkRuNHBBV1g0TWF4bDh1QkN0VVpYSWlNVWFlLnQvMUplNjJndEFXbGRWeUN5Ngp1c2VyNjokMnkkMDUkVUJhYk85NGJ1ck0wVWthamZjUTJWdWpuSHVFeFZGcUwzSTdLRW9GbjNBVnpGckNYQmg4Um0KdXNlcjc6JDJ5JDA1JEt0R2Rqdnh3b2dsdWZMVFBUZzhLYWUxOGY4WUY5YlJSWlhWYy5rQUhlZUNWdXpwdVZOVGw2CnVzZXI4OiQyeSQwNSRnek5QYURacVVpRTVETEJiZ2tpem1PR0VpRFcuMmU2VUYvYnZha0IyOHhRUjBRcUE1V1pYTwp1c2VyOTokMnkkMDUkWERVc2x6UXk4aElibUxtSEZaaGlsT2pLZDhldGpSOTRUcU1wMG9RSEJFUmtmRFJQUFc2RXkKdXNlcjEwOiQyeSQwNSQ2UmMvZ0J4Y1JxM09yd21QN2RFL1ZlWG5Dd2h5UlU3eW5MSDZOcS8uYUdQeFV4bWhkRUwzeQo= | base64 -d 
+  356  oc login -u kristendelgado -p redhat123 
+  357  oc get nodes
+  358  oc login -u admin -p red
+  359  cd ~/DO380/labs/auth-sync/
+  360  pwd
+  361  ll
+  362  cd sync/
+  363  pwd
+  364  ll
+  365   oc new-project auth-rhds-sync
+  366  oc get all 
+  367  oc get secret 
+  368  oc get sa
+  369  oc create sa rhds-group-syncer-sa 
+  370  oc get sa
+  371  oc create clusterrole rhds-group-syncer --verb get,list,create,update --resource groups
+  372  oc describe clusterrolebindings |less
+  373  oc get clusterrole
+  374  oc get clusterrole | grep rhds-group-syncer
+  375  oc describe  clusterrole rhds-group-syncer
+  376  oc get sa
+  377  oc adm policy add-cluster-role-to-user rhds-group-syncer -z rhds-group-syncer-sa 
+  378  oc describe clusterrolebindings |less
+  379   oc create secret generic rhds-secret  --from-literal bindPassword='redhatocp'
+  380  oc get secret 
+  381  oc explain LDAPSyncConfig |less
+  382  oc explain LdapSyncConfig |less
+  383  oc explain LdapSyncConfig 
+  384  ls -l 
+  385  vim rhds-sync.yaml 
+  386  oc create configmap rhds-config  --from-file rhds-sync.yaml=rhds-sync.yaml,ca.crt=rhds_ca.crt
+  387  oc get cm rhds-config -o yaml 
+  388  ll
+  389  vim rhds-cluster-role-binding.yaml
+  390  vim rhds-cluster-role.yaml 
+  391  vim rhds-groups-cronjob.yaml
+  392  oc get groups.user.openshift.io 
+  393  oc apply -f rhds-groups-cronjob.yaml 
+  394  oc get cronjobs.batch 
+  395  oc get groups.user.openshift.io 
+  396  oc get cronjobs.batch 
+  397  oc login -u kristendelgado -p redhat123 
+  398  oc get nodes
+  399  oc login -u admin -p red
+  400  oc get cronjobs.batch 
+  401  oc project auth-rhds-sync
+  402  oc get cronjobs.batch 
+  403  oc get groups.user.openshift.io 
+  404  oc login -u kristendelgado -p redhat123 
+  405  oc get nodes
+  406  oc whoami 
+  407  oc login -u admin -p red
+  408  oc project auth-rhds-sync
+  409  oc get cronjobs.batch 
+  410  oc get pods
+  411  oc get cronjobs.batch 
+  412  oc get pods
+  413  watch oc get pods
+  414  #oc explain LdapSyncConfig 
+  415  oc get ocb |less
+  416  oc get replicaset |less
+  417  oc explain replicaset |less
+  418  oc explain replicaset.sepc |less
+  419  oc explain replicaset.spec |less
+  420  oc explain replicaset.spec.selector |less
+  421  cat rhds-groups-cronjob.yaml 
+  422  oc project -q 
+  423  oc new-project demo01 
+  424  oc new-app --name test registry.ocp4.example.com:8443/openshift4/ose-cli:v4.12
+  425  oc get pods
+  426  oc logs  test-94bd78876-tfd4z
+  427  oc get pods
+  428  oc project auth-rhds-sync
+  429  oc get pods
+  430  oc get all 
+  431  oc get cronjobs.batch 
+  432  oc get groups
+  433  ll
+  434  vim rhds-cluster-role-binding.yaml 
+  435  vim rhds-sync.yaml 
+  436  oc get oauth -o yaml 
+  437  history > history-session-2.txt 
